@@ -2,7 +2,7 @@
 title               : dosisimone.github.io
 description         : >-
                       One day a yellowish box with a Pentium inside came into my house...<br>
-                      And that kids is how i met the computer
+                      And that kids is how I met the computer
 baseurl             : ""                                # Change to empty quotes if you are hosting your site at <your-username>.github.io directly
 repository          : dosisimone/dosisimone             # Change to <your-username>/<your-username>.github.io (or remove it if you don't need remote projects)
 remote_theme        : YoussefRaafatNasry/portfolYOU
