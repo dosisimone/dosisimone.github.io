@@ -1,0 +1,238 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+        <!-- JS -->
+        <script type="text/javascript">
+
+            var correctCodesInserted = true;
+            var codes = ["ciao1", "ciao2", "ciao3"];
+            var vibrationPattern = [600, 200, 1200, 400];
+            var vibrationDuration = 0;
+            vibrationDuration = calcVibrationDuration();
+
+            function calcVibrationDuration() {
+                var duration = 0;
+                for (var i = 0; i < vibrationPattern.length; ++i) {
+                    duration += vibrationPattern[i];
+                }
+                return duration;
+            }
+
+            function vibrate() {
+                window.navigator.vibrate(vibrationPattern);
+            }
+
+            function hideElementById(id, isHidden) {
+                var element = document.getElementById(id);
+                if (element != null) {
+                    element.style.display = (isHidden) ? "none" : "initial";
+                }
+            }
+
+            function setGifActive(isActive) {
+                hideElementById("gifcontainer", !isActive);
+            }
+
+            function setSecretCodesFormActive(isActive) {
+                hideElementById("form", !isActive);
+                var hideErrorDialog = correctCodesInserted && isActive;
+                hideElementById("error_codes", hideErrorDialog);
+            }
+
+            function setResultsPageActive(isActive) {
+                hideElementById("results", !isActive);
+            }
+
+            function checkSecretCodesInputFields() {
+                var codesOk = true;
+                var userCode1 = document.getElementById("secret1").value;
+                var userCode2 = document.getElementById("secret2").value;
+                var userCode3 = document.getElementById("secret3").value;                
+                codesOk = codesOk && codes[0].localeCompare(userCode1.toLowerCase()) == 0;
+                codesOk = codesOk && codes[1].localeCompare(userCode2.toLowerCase()) == 0;
+                codesOk = codesOk && codes[2].localeCompare(userCode3.toLowerCase()) == 0;
+                return codesOk;
+            }
+
+            function resetSecretCodesInputFields() {
+                document.getElementById("secret1").value = null;
+                document.getElementById("secret2").value = null;
+                document.getElementById("secret3").value = null;
+            }
+
+            function showSecretCodesInputFields() {
+                setGifActive(false);
+                setSecretCodesFormActive(true);
+                setResultsPageActive(false);
+            }
+
+            function showDokkaebiGif() {
+                setGifActive(true);
+                setSecretCodesFormActive(false);
+                setResultsPageActive(false);
+            }
+
+            function showResults() {
+                setGifActive(false);
+                setSecretCodesFormActive(false);
+                setResultsPageActive(true);
+            }
+
+            function onStart() {
+                showSecretCodesInputFields();                   
+            }
+
+            function onCheckSecretCodes() {
+
+                correctCodesInserted = checkSecretCodesInputFields();
+
+                setGifActive(true);
+                setSecretCodesFormActive(false);
+                setResultsPageActive(false);
+
+                vibrate();
+                var intervalId = setInterval(() => {
+                    vibrate();
+                }, vibrationDuration);
+
+                setTimeout(
+                    (_intervalId = intervalId)=>{    
+                        //stop vibration                    
+                        clearInterval(_intervalId);
+                        //check
+                        if (correctCodesInserted) {                       
+                            showResults();
+                        }
+                        else {
+                            resetSecretCodesInputFields();
+                            showSecretCodesInputFields();
+                        }
+                    },
+                    vibrationDuration * 2 - 1
+                );                
+            }
+
+        </script>
+        <!-- CSS -->
+        <style type="text/css">
+            @import url('https://fonts.googleapis.com/css2?family=Oswald:wght@600&display=swap');
+
+            .material-icons { font-size: 64px; }
+
+            html {
+                height: 100%;
+            }
+            body {
+                margin: auto;
+                background-color: black;
+                height: 100%;
+            }    
+
+            body * {
+                font-family: Oswald;
+                font-size: 64px;
+                text-transform: uppercase;
+                color: #F2C216;
+            }   
+
+            input {
+                box-sizing: border-box;
+                border: 4px solid #F2C216;
+                border-radius: 0;
+                color: #F2C216;
+                background-color: black;
+            }    
+
+            input::placeholder {
+                color: #F2C216;
+            }
+
+            button {
+                border: 4px solid #F2C216;
+                border-radius: 0;
+                background-color: #F2C216;
+                color: black;
+            }
+
+            *:focus {
+                outline: white solid 2px;
+            }
+            
+            .content {
+                margin: auto;
+                width: 90%;
+                height: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+                text-align: center;
+            }
+            
+            .content > div {
+                margin: auto;
+            }
+
+            img {
+                width: 100%;
+            }
+
+            #form {
+                width: 100%;
+                display: flex;
+                flex-direction: column;
+                align-items: center;
+                justify-content: center;
+            }
+
+            #form * {
+                width: 100%;
+            }
+
+            #form > * {
+                margin-top: 8px;
+                margin-bottom: 8px;
+            }
+
+            .secret_input {
+                text-align: center;
+                padding: auto;
+            }
+
+            .secret_input:focus {
+                outline: #F2C216 solid 2px;
+            }
+
+            #gifcontainer, #results, #error_codes {
+                display: none;
+            }
+        </style>
+    </head>
+    <body onload="onStart()">
+        <div class="content">
+            <!-- Page content -->
+            <div id="gifcontainer">
+                <img id="gif" src="https://mir-s3-cdn-cf.behance.net/project_modules/max_1200/97057592642733.5e5018d4702f5.gif">
+            </div>
+            <div id="form">
+                <h1 id="error_codes">access denied!</h1>
+                <div>
+                    <input id="secret1" class ="secret_input" type="text" placeholder="Secret code 1">
+                </div>  
+                <div>
+                    <input id="secret2" class ="secret_input" type="text" placeholder="Secret code 2">
+                </div>
+                <div>
+                    <input id="secret3" class ="secret_input" type="text" placeholder="Secret code 3">
+                </div>           
+                <button onclick="onCheckSecretCodes()">Submit</button>                
+            </div>
+            <div id="results">                
+                <h1>
+                    <i class="material-icons"> language</i>44.117931 11.021988
+                </h1>
+            </div>            
+        </div>
+    </body>
+</html>
