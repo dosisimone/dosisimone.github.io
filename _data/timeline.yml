@@ -1,6 +1,8 @@
-- title: Junior Gameplay Programmer, Ubisoft Milan, IT
+- title: Junior Tech Gameplay Programmer, Ubisoft Milan, IT
   from: Jun. 2020
   to: ongoing
+  description:  I work as C++ programmer on Mario+Rabbids Sparks of Hope and its 3 DLCs.<br>
+                My job is mainly focused on developing tools for the animation and narrative team in order to empower them to create wonderful cinematic experiences.
 
 - title: BE Computer Engineering, University of Bologna, IT
   from: Sept. 2015
@@ -14,9 +16,8 @@
   from: Sept. 2018
   to: Oct. 2019
   description:  I worked as a developer of a BIM software made in Unreal Engine 4.<br>
-                My job was to design and implement algorithms. In particular, I have implemented 
-                the relation system between the BIM entities and their geometrical adaptation 
-                in order to be exportable to the ZURU’s production services.
+                My job was to design and implement algorithms. In order to export the 
+                user’s drawings to the ZURU’s production services.
 
 - title: Founding partner and Unity Dev, Associazione Audiogames, IT
   from: Jan. 2017
